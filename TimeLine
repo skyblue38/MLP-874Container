@@ -60,6 +60,7 @@
   services: cockpit dhcpv6-client ssh
   ports: 5000/tcp
   ...
-15. Started the application: node app.js
+15. Started the application using "node app.js" and got:
+  BuildYourHome app listening on port 5000!
 16. 
 (to be continued)
