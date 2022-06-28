@@ -9,5 +9,6 @@
   a) Minimal with Docker instead of Podman
   b) add packages git, python36, npm and nodejs
 7. Read about GIT (the Stupid Content Tracker) on dhost01.local -> file:///usr/share/doc/git/user-manual.html
+Created a Personal Access Token as described in https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
 (to be continued)
