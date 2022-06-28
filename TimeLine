@@ -5,5 +5,8 @@
 3. Submit user "skyblue" to first Manning Live Project "Containerize and Application"
 4. Receive invite to manning-lp/skyblue38-containerize-an-application-lp repository https://github.com/manning-lp/skyblue38-containerize-an-application-lp/invitations
 5. got to https://github.com/manning-lp/skyblue38-containerize-an-application-lp
+6. Rather than modify own Windows desktop... Build VirtualBOX Centos Stream 8 minimal VM (dHost1)
+  a) Minimal with Docker instead of Podman
+  b) add git, python3, npm and node.js
 
 (to be continued)
