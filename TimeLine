@@ -71,4 +71,108 @@
   "You did not set a publishable key. Call Stripe.setPublishableKey().
   see https://stripe.com/docs/stripe.js"
 17. Stopped the application by entereing Ctrl-C on console running "node app.js"
+18. Checked that docker is available: Ran "docker version" and got:
+  Client: Docker Engine - Community
+    Version:           20.10.17
+    API version:       1.41
+    Go version:        go1.17.11
+    Git commit:        100c701
+    Built:             Mon Jun  6 23:03:11 2022
+    OS/Arch:           linux/amd64
+    Context:           default
+    Experimental:      true
+  Server: Docker Engine - Community
+    Engine:
+      Version:          20.10.17
+      API version:      1.41 (minimum version 1.12)
+      Go version:       go1.17.11
+      Git commit:       a89b842
+      Built:            Mon Jun  6 23:01:29 2022
+      OS/Arch:          linux/amd64
+      Experimental:     false
+    containerd:
+      Version:          1.6.6
+      GitCommit:        10c12954828e7c7c9b6e0ea9b0c02b01407d3ae1
+    runc:
+      Version:          1.1.2
+      GitCommit:        v1.1.2-0-ga916309
+    docker-init:
+      Version:          0.19.0
+      GitCommit:        de40ad0
+19. Read and interpreted resource chapter: 
+  Learn Docker in a Month of Lunches by Elton Stoneman
+  Chapter 3, section 2, “Writing your first Dockerfile”
+  https://livebook.manning.com/book/learn-docker-in-a-month-of-lunches/chapter-3/point-14834-41-58-1
+20: Created Dockerfile and .dockerignore as shown below:
+  cd ~sysadmin/skyblue<TAB>
+  cat <<EOF >Dockerfile
+    FROM node:14-alpine
+     WORKDIR /shoppingcart
+     COPY app.js .
+     COPY items.json .
+     COPY node_modules/ .
+     COPY public/ .
+     COPY views/ .
+     CMD ["node", "/shoppingcart/app.js"]
+     EOF
+   cat <<EOF >.dockerignore
+     node_modules
+     EOF
+21. Built container using "docker build -t scart:1.0 ." and got:
+  Sending build context to Docker daemon  2.057MB
+  Step 1/7 : FROM node:14-alpine
+  14-alpine: Pulling from library/node
+  2408cc74d12b: Pull complete
+  ee8b448b40d0: Pull complete
+  75baac63bc00: Pull complete
+  ebc461dbc49b: Pull complete
+  Digest: sha256:6b87d16e4ce20cacd6f1f662f66c821e4c3c41c2903daeace52d818ec3f4bbdd
+  Status: Downloaded newer image for node:14-alpine
+    ---> 47afee183159
+  Step 2/7 : WORKDIR shoppingcart
+    ---> Running in 7fc9f1390d04
+  Removing intermediate container 7fc9f1390d04
+    ---> 4e5b00c5c6cb
+  Step 3/7 : COPY app.js .
+    ---> 5b2dddc2aa5a
+  Step 4/7 : COPY items.json .
+    ---> 406e2768b41c
+  Step 5/7 : COPY public/ .
+    ---> 39acf9a3dd81
+  Step 6/7 : COPY views/ .
+    ---> 3a818a67faf7
+  Step 7/7 : CMD ["node", "/shoppingcart/apps.js"]
+    ---> Running in f012c90fef7a
+  Removing intermediate container f012c90fef7a
+    ---> 1a1182dc9cfa
+  Successfully built 1a1182dc9cfa
+  Successfully tagged scart:1.0
+20. Checked currently available Docker images using "docker images" and got:
+  REPOSITORY     TAG         IMAGE ID       CREATED          SIZE
+  scart          1.0         1a1182dc9cfa   13 minutes ago   120MB
+  node           14-alpine   47afee183159   2 weeks ago      119MB
+  kindest/node   <none>      32b8b755dee8   13 months ago    1.12GB
+21. Tried running the container using "docker run -it --rm --init -p 5000:5000 scart:1.0"
+  produced runtime error ??
+  internal/modules/cjs/loader.js:905
+    throw err;
+  Error: Cannot find module 'dotenv'
+  Require stack:
+    - /shoppingcart/app.js
+      at Function.Module._resolveFilename (internal/modules/cjs/loader.js:902:15)
+      at Function.Module._load (internal/modules/cjs/loader.js:746:27)
+      at Module.require (internal/modules/cjs/loader.js:974:19)
+      at require (internal/modules/cjs/helpers.js:101:18)
+      at Object.<anonymous> (/shoppingcart/app.js:3:5)
+      at Module._compile (internal/modules/cjs/loader.js:1085:14)
+      at Object.Module._extensions..js (internal/modules/cjs/loader.js:1114:10)
+      at Module.load (internal/modules/cjs/loader.js:950:32)
+      at Function.Module._load (internal/modules/cjs/loader.js:790:12)
+      at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:75:12) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ '/shoppingcart/app.js' ]
+    }
+22. Revisiting resource chapters indicated that a two-stage docker file may be required...
+  see: https://livebook.manning.com/book/learn-docker-in-a-month-of-lunches/chapter-4/62
+23. 
 (to be continued)
