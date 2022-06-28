@@ -174,5 +174,71 @@
     }
 22. Revisiting resource chapters indicated that a two-stage docker file may be required...
   see: https://livebook.manning.com/book/learn-docker-in-a-month-of-lunches/chapter-4/62
-23. 
+  "Node.js is different--it uses JavaScript, which is an interpreted language, so there’s no compilation step. 
+  Dockerized Node.js apps need the Node.js runtime and the source code in the application image."  
+23. Create new Dockerfile with contents as shown below"
+  FROM node:14-alpine AS builder
+   WORKDIR /src
+   COPY app.js .
+   COPY items.json .
+   COPY package-lock.json .
+   COPY package.json .
+   COPY public/ .
+   COPY views/ .
+   RUN npm install
+   RUN npm audit fix
+
+   FROM node:14-alpine
+   WORKDIR /app
+   COPY --from=builder /src/node_modules/ /app/node_modules/
+   COPY app.js .
+   COPY items.json .
+   COPY package-lock.json .
+   COPY package.json .
+   COPY public/ .
+   COPY views/ .
+   EXPOSE 5000
+   CMD ["node", "/app/app.js"]
+24. Rebuilt using "docker build -t scart:1.0 ." and got:
+  Sending build context to Docker daemon  2.058MB
+  Step 1/21 : FROM node:14-alpine AS builder
+    ---> 47afee183159
+  Step 2/21 : WORKDIR /src
+  ...
+  Step 9/21 : RUN npm install
+    ---> Running in 486705474ec0
+  npm WARN shopping-cart@1.0.0 No description
+  npm WARN shopping-cart@1.0.0 No repository field.
+  added 69 packages from 93 contributors and audited 69 packages in 4.115s
+  found 0 vulnerabilities
+  Removing intermediate container 486705474ec0
+    ---> 76117d50c698
+  Step 10/21 : RUN npm audit fix
+    ---> Running in d5cd8d184cb6
+  npm WARN shopping-cart@1.0.0 No description
+  npm WARN shopping-cart@1.0.0 No repository field.
+  up to date in 1.124s
+  fixed 0 of 0 vulnerabilities in 69 scanned packages
+  Step 11/21 : FROM node:14-alpine
+    ---> 47afee183159
+  Step 12/21 : WORKDIR /app
+    ---> Running in 5585505b1ca9
+  Step 13/21 : COPY --from=builder /src/node_modules/ /app/node_modules/
+    ---> 99120468c30c
+  ...
+  Step 21/21 : CMD ["node", "/app/app.js"]
+    ---> Running in 3328dfd52370
+  Removing intermediate container 3328dfd52370
+    ---> 3f74d8ea1afa
+  Successfully built 3f74d8ea1afa
+  Successfully tagged scart:1.0
+25. Checked currently available Docker images using "docker images" and got:
+  REPOSITORY     TAG         IMAGE ID       CREATED         SIZE
+  scart          1.0         3f74d8ea1afa   8 minutes ago   125MB
+  ...
+26. Test run docker image using "docker run -it --rm --init -p 5000:5000 scart:1.0" and got:
+  BuildYourHome app listening on port 5000!
+27. 
+
+
 (to be continued)
