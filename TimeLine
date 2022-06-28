@@ -4,11 +4,50 @@
 2. Create GitHUB repo https://github.com/skyblue38/MLP-874Container
 3. Submit user "skyblue" to first Manning Live Project "Containerize and Application"
 4. Receive invite to manning-lp/skyblue38-containerize-an-application-lp repository https://github.com/manning-lp/skyblue38-containerize-an-application-lp/invitations
-5. got to https://github.com/manning-lp/skyblue38-containerize-an-application-lp
+5. go to https://github.com/manning-lp/skyblue38-containerize-an-application-lp
 6. Rather than modify own Windows desktop... Build VirtualBOX Centos Stream 8 minimal VM (dHost01.local 192.168.0.81/24)
   a) Minimal with Docker instead of Podman
   b) add packages git, python36, npm and nodejs
 7. Read about GIT (the Stupid Content Tracker) on dhost01.local -> file:///usr/share/doc/git/user-manual.html
-Created a Personal Access Token as described in https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
-
+8. Created a Personal Access Token as described in https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+9. Ran "git clone https://github.com/manning-lp/skyblue38-containerize-an-application-lp" and got:
+  Cloning into 'skyblue38-containerize-an-application-lp'...
+  Username for 'https://github.com': skyblue
+  Password for 'https://skyblue@github.com': ... (entered Token as password)
+  remote: Enumerating objects: 120, done.
+  remote: Counting objects: 100% (120/120), done.
+  remote: Compressing objects: 100% (65/65), done.
+  remote: Total 120 (delta 50), reused 120 (delta 50), pack-reused 0
+  Receiving objects: 100% (120/120), 1.32 MiB | 5.82 MiB/s, done.
+  Resolving deltas: 100% (50/50), done.
+10. Ran "cd skyblue38-containerize-an-application-lp; npm install" and got:
+  npm WARN read-shrinkwrap This version of npm is compatible with lockfileVersion@1, but package-lock.json was generated for lockfileVersion@2. I'll try to do my best with it!
+  npm WARN shopping-cart@1.0.0 No repository field.
+  added 68 packages from 93 contributors and audited 68 packages in 4.259s
+  found 1 critical severity vulnerability
+  run `npm audit fix` to fix them, or `npm audit` for details
+11. Ran "npm audit" and got:
+  === npm audit security report ===
+  # Run  npm update ejs --depth 1  to resolve 1 vulnerability
+  ┌───────────────┬──────────────────────────────────────────────────────────────┐
+  │ Critical      │ Template injection in ejs                                    │
+  ├───────────────┼──────────────────────────────────────────────────────────────┤
+  │ Package       │ ejs                                                          │
+  ├───────────────┼──────────────────────────────────────────────────────────────┤
+  │ Dependency of │ ejs                                                          │
+  ├───────────────┼──────────────────────────────────────────────────────────────┤
+  │ Path          │ ejs                                                          │
+  ├───────────────┼──────────────────────────────────────────────────────────────┤
+  │ More info     │ https://github.com/advisories/GHSA-phwq-j96m-2c2q            │
+  └───────────────┴──────────────────────────────────────────────────────────────┘
+  found 1 critical severity vulnerability in 68 scanned packages
+  run `npm audit fix` to fix 1 of them.
+12. Ran "npm audit fix" and got:
+  npm WARN shopping-cart@1.0.0 No repository field.
+  + ejs@3.1.8
+  added 2 packages from 2 contributors, removed 1 package and updated 14 packages in 4.004s
+  2 packages are looking for funding
+  run `npm fund` for details
+  fixed 1 of 1 vulnerability in 68 scanned packages
+13. 
 (to be continued)
