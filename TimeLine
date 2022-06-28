@@ -238,7 +238,14 @@
   ...
 26. Test run docker image using "docker run -it --rm --init -p 5000:5000 scart:1.0" and got:
   BuildYourHome app listening on port 5000!
-27. 
+27. Open Firefox on Windows desktop and visited URL "http://192.168.0.81:5000/store" and got:
+  Accessing store page...
+  Error: Failed to lookup view "store.ejs" in views directory "/app/views"
+    at Function.render (/app/node_modules/express/lib/application.js:580:17)
+    at ServerResponse.render (/app/node_modules/express/lib/response.js:1012:7)
+    at /app/app.js:31:17
+    at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:71:3)
+28. Seems to be a directory hierarchy issue...
 
 
 (to be continued)
