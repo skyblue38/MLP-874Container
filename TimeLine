@@ -62,13 +62,13 @@
   ...
 15. Started the application using "node app.js" and got:
   BuildYourHome app listening on port 5000!
-16. Open a browser on my Windows desktop and visit URL: http://192.168.0.81:5000 ... got appl main page
-  Then wen to URL: http://192.168.0.81:5000/store and got shopping page
+16. Open a browser on my Windows desktop and visit URL: http://192.168.0.81:5000 ... got BuildYourHome appl main page
+  Then went to URL: http://192.168.0.81:5000/store and got shopping page
   Selected an item and added to cart
   Viewed Cart and entered payment details
   (used https://www.technetexperts.com/test-credit-card-number/ to get a credit card number)
   Payment failed with message 
   "You did not set a publishable key. Call Stripe.setPublishableKey().
   see https://stripe.com/docs/stripe.js"
-17. 
+17. Stopped the application by entereing Ctrl-C on console running "node app.js"
 (to be continued)
