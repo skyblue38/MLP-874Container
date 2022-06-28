@@ -8,5 +8,6 @@
 6. Rather than modify own Windows desktop... Build VirtualBOX Centos Stream 8 minimal VM (dHost1)
   a) Minimal with Docker instead of Podman
   b) add git, python3, npm and node.js
+7. Read about GIT on dhost1.local -> file:///usr/share/doc/git/user-manual.html
 
 (to be continued)
