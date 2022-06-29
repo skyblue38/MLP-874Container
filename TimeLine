@@ -247,5 +247,51 @@
     at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:71:3)
 28. Seems to be a directory hierarchy issue...
 
+#29-Jun-2020
+
+Restarted after glancing at hints and suggested solutions in MLP Resources
+
+Dockerfile does not need to be 2-stage or so complex...
+Created new image setup as follows:
+
+1. Started dHost01.local VM in VirtualBOX (Server bridged to home intranet at 192.168.0.81/24)
+2. Logged in as user "sysadmin" from the Windows desktop via putty
+3. Created a directory:  mkdir shoppingcart
+4. Coppied the scart application files into shoppingcart
+  cp *.js shoppingcart; cp *.json shoppingcart; cp -r views shoppingcart; cp -r public shoppingcart
+5. Createg .dockerignore using:
+  cat <<EOF >shoppingcart/.dockerfile
+  .git
+  .cache
+  node_modules
+  **/.env
+  **/.git
+  **/.gitignore
+  **/.project
+  EOF
+6. Created Dockerfile using:
+  cat <<EOF >shoppingcart/Dockerfile
+  FROM node:14-alpine
+    WORKDIR /usr/src/app
+    COPY package*.json ./
+    RUN npm install
+    RUN npm audit fix
+    COPY . .
+    EXPOSE 5000
+    CMD ["node", "app.js"]
+  EOF
+  # Note that since port 5000/tcp is already allowed through VM firewall, 
+  # and that the Application expects internal web traffic on port 5000, then
+  # the container will continue to use port 5000 externally, to match the firewall settings
+7. Built the container image using command "docker build -t scart:1.0 ."
+  This time, no build errors. Very fast because everything was loaded from cache.
+8. Verified the container image using "docker images"
+  REPOSITORY     TAG         IMAGE ID       CREATED          SIZE
+  scart          1.0         32cf57bd8af8   22 minutes ago   127MB
+9. Ran the container using "docker run -it --rm --init -p 5000:5000 scart:1.0"
+  no run-time errors. WORKDIR /usr/src/app seems to make it work OK :-)
+10. Openned firefox in Windows desktop and browsed to URL "http://192.168.0.81:5000/store"
+  Firefox displayed the application storefront correctly.
+
 
 (to be continued)
