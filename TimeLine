@@ -293,5 +293,14 @@ Created new image setup as follows:
 10. Openned firefox in Windows desktop and browsed to URL "http://192.168.0.81:5000/store"
   Firefox displayed the application storefront correctly.
 
+I have an existing container repository service setup as user "skybluedev" at quay.io
+Now the working container image will be pushed to the repository: 
+1. login to the repoitory using: docker login -u skybluedev quay.io
+2. Associated image with the quay.io repository by tagging using: "docker tag scart:1.0 quay.io/skybluedev/scart:1.0"
+3. uploaded to quay.io using: "docker push quay.io/skybluedev/scart:1.0"
+4. logged into quay.io using firefox on Windows desktop and added tag "latest"
+3. checked by cleaning local runtime and running from quay.io directly. Commands used were:
 
-(to be continued)
+Now the Dockerfile and .dockerignore must be uploaded to the Mannin Live Project area for skyblue on github...
+Feedback was presented.
+Task Completed.
